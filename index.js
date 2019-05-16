@@ -2,6 +2,7 @@ window.onload = function() {
     colors = ["#ffffff", "#42ebf4", "#415ff4", "#f7c922", "#f7f321", "#48f721", "#aa1efc", "#fc1e1e"]
     class tetrimino {
         constructor(x, y, c) {
+            this.c = c
             this.parts = [];
             this.x = x;
             this.y = y;
@@ -9,6 +10,8 @@ window.onload = function() {
             //facing right 1
             //facing down 2
             //facing left 3
+            console.log("YA:" + c)
+
             switch (c) {
 
                 case 1:
@@ -56,9 +59,9 @@ window.onload = function() {
                     this.parts.push(new tetrim(x + 2, y + 1, c));
                     break;
             }
-            if(!this.parts.every(function(val){
-                return 0 === grid[val.x][val.y]
-            })){
+            if (!this.parts.every(function(val) {
+                    return 0 === grid[val.x][val.y]
+                })) {
                 console.log("GAME OVER")
             }
 
@@ -93,8 +96,9 @@ window.onload = function() {
                         ctx.fillRect(j * 20 + 1, i * 20 + 1, 18, 18);
                     }
                     //active = new tetrimino(0, 0, 1)
-                    active = new tetrimino(0, 0, Math.floor(Math.random() * 6) + 1)
                 }
+                active = new tetrimino(0, 0, Math.floor(Math.random() * 6) + 1)
+
             }
         }
         check(n) {
@@ -119,10 +123,10 @@ window.onload = function() {
             a.cx = a.x + 1
             a.cy = a.y + 1
             if (a.c === 1) {
-                a.cx+=.5
-                    a.cy+=.5
+                a.cx += .5
+                a.cy += .5
             }
-            if(a.c === 4){
+            if (a.c === 4) {
                 return true;
             }
             //rotating right
@@ -198,19 +202,19 @@ window.onload = function() {
             })
         }
     }
-    let active = new tetrimino(0, 0, Math.floor(Math.random()*6))
+    let active = new tetrimino(0, 0, Math.floor(Math.random() * 6))
     let cd = 30;
     let rotate = true;
     let kcd = 0;
     let key = [];
     document.body.onkeydown = function(e) {
         if (rotate && e.keyCode === 38) {
-                rotate = false;
-                active.rotate(1)
-                draw()
-                kcd = 4;
-            }
-        
+            rotate = false;
+            active.rotate(1)
+            draw()
+            kcd = 4;
+        }
+
         if (key.indexOf(e.keyCode) == -1) {
             key.push(e.keyCode)
             kcd = 0;
@@ -221,7 +225,7 @@ window.onload = function() {
 
     };
     document.body.onkeyup = function(e) {
-        if(e.keyCode === 38){
+        if (e.keyCode === 38) {
             rotate = true;
         }
         key.splice(key.indexOf(e.keyCode), 1);
