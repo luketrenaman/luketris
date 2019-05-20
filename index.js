@@ -1,5 +1,5 @@
 window.onload = function() {
-    colors = ["#ffffff", "#42ebf4", "#415ff4", "#f7c922", "#f7f321", "#48f721", "#aa1efc", "#fc1e1e"]
+    colors = ["#ffffff", "#42ebf4", "#415ff4", "#f7c922", "#f7f321", "#48f721", "#aa1efc", "#fc1e1e"];
     class tetrimino {
         constructor(x, y, c) {
             this.c = c
