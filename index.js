@@ -45,10 +45,10 @@ window.onload = function() {
                     this.parts.push(new tetrim(x + 1, y + 1, c));
                     break;
                 case 6:
-                    this.parts.push(new tetrim(x + 1, y, c));
-                    this.parts.push(new tetrim(x + 2, y, c));
-                    this.parts.push(new tetrim(x, y + 1, c));
                     this.parts.push(new tetrim(x + 1, y + 1, c));
+                    this.parts.push(new tetrim(x + 2, y + 1, c));
+                    this.parts.push(new tetrim(x, y, c));
+                    this.parts.push(new tetrim(x + 1, y, c));
                     break;
 
                 case 7:
@@ -62,7 +62,8 @@ window.onload = function() {
             if (!this.parts.every(function(val) {
                     return 0 === grid[val.x][val.y]
                 })) {
-                console.log("GAME OVER")
+                console.log("e")
+                game = false;
             }
 
         }
@@ -202,11 +203,12 @@ window.onload = function() {
             })
         }
     }
-    let active = new tetrimino(0, 0, Math.floor(Math.random() * 6))
+    let active = new tetrimino(0, 0, Math.floor(Math.random() * 6) + 1)
     let cd = 30;
     let rotate = true;
     let kcd = 0;
     let key = [];
+    let game = true;
     document.body.onkeydown = function(e) {
         if (rotate && e.keyCode === 38) {
             rotate = false;
@@ -232,6 +234,17 @@ window.onload = function() {
         kcd = 0;
     }
 
+    function redshift() {
+        for (let i = 0; i < 24; i++) {
+            for (let j = 0; j < 10; j++) {
+                ctx.fillStyle = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+                ctx.fillRect(j * 20, i * 20, 20, 20);
+            }
+
+        }
+        requestAnimationFrame(redshift)
+    }
+
     function loop() {
         cd--
         kcd--
@@ -239,12 +252,12 @@ window.onload = function() {
             if (key.indexOf(37) != -1) {
                 active.move(-1, 0)
                 draw()
-                kcd = 4;
+                kcd = 7;
             }
             if (key.indexOf(39) != -1) {
                 active.move(1, 0)
                 draw()
-                kcd = 4;
+                kcd = 7;
             }
             if (key.indexOf(40) != -1) {
                 active.move(0, 1)
@@ -259,10 +272,13 @@ window.onload = function() {
             draw()
             cd = 20;
         }
-        requestAnimationFrame(loop)
+        if (game) {
+            requestAnimationFrame(loop)
+        } else {
+            requestAnimationFrame(redshift)
+        }
     }
     requestAnimationFrame(loop)
 
     draw()
-
 }
