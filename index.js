@@ -98,7 +98,7 @@ window.onload = function() {
                     }
                     //active = new tetrimino(0, 0, 1)
                 }
-                active = new tetrimino(0, 0, Math.floor(Math.random() * 6) + 1)
+                active = new tetrimino(0, 0, Math.round(Math.random() * 6) + 1)
 
             }
         }
