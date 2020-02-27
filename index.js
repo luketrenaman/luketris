@@ -76,6 +76,7 @@ window.onload = function() {
                 }
                 this.x = this.x + x
                 this.y = this.y + y
+                return true;
             } else if (y != 0) {
                 active.parts.forEach(function(val) {
                     grid[val.y][val.x] = val.c;
@@ -98,8 +99,14 @@ window.onload = function() {
                     }
                     //active = new tetrimino(0, 0, 1)
                 }
-                active = new tetrimino(0, 0, Math.round(Math.random() * 6) + 1)
+                active = new tetrimino(0, 0, Math.round(Math.random() * 6) + 1);
+                return false;
 
+            }
+        }
+        drop(){
+            while(this.move(0,1)){
+                
             }
         }
         check(n) {
@@ -206,6 +213,7 @@ window.onload = function() {
     let active = new tetrimino(0, 0, Math.floor(Math.random() * 6) + 1)
     let cd = 30;
     let rotate = true;
+    let hardDrop = false;
     let kcd = 0;
     let key = [];
     let game = true;
@@ -215,6 +223,11 @@ window.onload = function() {
             active.rotate(1)
             draw()
             kcd = 4;
+        }
+        if(hardDrop && e.keyCode === 32){
+            active.drop();
+            draw();
+
         }
 
         if (key.indexOf(e.keyCode) == -1) {
@@ -229,6 +242,9 @@ window.onload = function() {
     document.body.onkeyup = function(e) {
         if (e.keyCode === 38) {
             rotate = true;
+        }
+        if (e.keyCode === 32) {
+            hardDrop = true;
         }
         key.splice(key.indexOf(e.keyCode), 1);
         kcd = 0;
