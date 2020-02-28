@@ -97,7 +97,7 @@ window.onload = function() {
                 for (let i = 0; i < 24; i++) {
                     for (let j = 0; j < 10; j++) {
                         ctx.fillStyle = colors[grid[i][j]];
-                        ctx.fillRect(j * 20 + 1, i * 20 + 1, 18, 18);
+                        ctx.fillRect(j * 20 + 2, i * 20 + 2, 18, 18);
                     }
                     //active = new tetrimino(0, 0, 1)
                 }
@@ -115,7 +115,7 @@ window.onload = function() {
             }
             this.futureParts.forEach(function(val){
                 ctx.fillStyle = colors[0]
-                ctx.fillRect(val.x * 20 + 1, val.y * 20 + 1, 18, 18);
+                ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
                 grid[val.y][val.x] = 0
             })
             for (let i = 0; i < this.parts.length; i++) {
@@ -162,7 +162,7 @@ window.onload = function() {
                 this.parts.forEach(function(val) {
 
                     ctx.fillStyle = colors[0]
-                    ctx.fillRect(val.x * 20 + 1, val.y * 20 + 1, 18, 18);
+                    ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
                     let y = val.y
                     let x = val.x
                     val.nx = (y - a.cy) * -1 + a.cx
@@ -190,7 +190,7 @@ window.onload = function() {
         }
         move(x, y) {
             ctx.fillStyle = colors[0]
-            ctx.fillRect(this.x * 20 + 1, this.y * 20 + 1, 18, 18);
+            ctx.fillRect(this.x * 20 + 2, this.y * 20 + 2, 18, 18);
             grid[this.y][this.x] = 0
             this.x = this.x + x;
             this.y = this.y + y;
@@ -218,7 +218,7 @@ window.onload = function() {
         for (let j = 0; j < 10; j++) {
             //ctx.fillStyle = colors[grid[i][j]];
             //ctx.fillRect(i * 20, j * 20, 20, 20);
-            ctx.rect(j * 20, i * 20, 20, 20);
+            ctx.rect(j * 20 + 1, i * 20 + 1, 20, 20);
             ctx.stroke();
         }
 
@@ -226,11 +226,11 @@ window.onload = function() {
             active.showFuture();
             active.futureParts.forEach(function(val){
                 ctx.fillStyle = previewColors[val.c];
-                ctx.fillRect(val.x * 20 + 1, val.y * 20 + 1, 18, 18);
+                ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
             })
             active.parts.forEach(function(val) {
                 ctx.fillStyle = colors[val.c];
-                ctx.fillRect(val.x * 20 + 1, val.y * 20 + 1, 18, 18);
+                ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
             })
         }
     }
@@ -295,18 +295,18 @@ window.onload = function() {
             if (key.indexOf(37) != -1) {
                 active.move(-1, 0)
                 draw()
-                kcd = 7;
+                kcd = 10;
             }
             if (key.indexOf(39) != -1) {
                 active.move(1, 0)
                 draw()
-                kcd = 7;
+                kcd = 10;
             }
             if (key.indexOf(40) != -1) {
                 active.move(0, 1)
                 draw()
                 cd = 20;
-                kcd = 5;
+                kcd = 7;
             }
 
         }
