@@ -221,18 +221,19 @@ window.onload = function() {
             ctx.rect(j * 20 + 1, i * 20 + 1, 20, 20);
             ctx.stroke();
         }
-
-        function draw() {
-            active.showFuture();
-            active.futureParts.forEach(function(val){
-                ctx.fillStyle = previewColors[val.c];
-                ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
-            })
-            active.parts.forEach(function(val) {
-                ctx.fillStyle = colors[val.c];
-                ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
-            })
-        }
+    }
+    ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20);
+    ctx.stroke();
+    function draw() {
+        active.showFuture();
+        active.futureParts.forEach(function(val){
+            ctx.fillStyle = previewColors[val.c];
+            ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
+        })
+        active.parts.forEach(function(val) {
+            ctx.fillStyle = colors[val.c];
+            ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
+        })
     }
     let active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
     let cd = 30;
