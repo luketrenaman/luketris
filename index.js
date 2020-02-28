@@ -1,9 +1,11 @@
 window.onload = function() {
     colors = ["#ffffff", "#42ebf4", "#415ff4", "#f7c922", "#f7f321", "#48f721", "#aa1efc", "#fc1e1e"];
+    previewColors = ["#ffffff", "#b2f7fb", "#b1befb", "#fbe595", "#fbf994", "#a7fb94", "#d693fe", "#fe9393"];
     class tetrimino {
         constructor(x, y, c) {
             this.c = c
             this.parts = [];
+            this.futureParts = [new tetrim(0,0,0), new tetrim(0,0,0), new tetrim(0,0,0), new tetrim(0,0,0)];
             this.x = x;
             this.y = y;
             //facing up 0
@@ -60,7 +62,7 @@ window.onload = function() {
                     break;
             }
             if (!this.parts.every(function(val) {
-                    return 0 === grid[val.x][val.y]
+                    return 0 === grid[val.y][val.x]
                 })) {
                 console.log("e")
                 game = false;
@@ -99,9 +101,27 @@ window.onload = function() {
                     }
                     //active = new tetrimino(0, 0, 1)
                 }
-                active = new tetrimino(0, 0, Math.round(Math.random() * 6) + 1);
+                active = new tetrimino(3, 0, Math.round(Math.random() * 6) + 1);
                 return false;
 
+            }
+        }
+        showFuture(){
+            let counter = 0;
+            while(this.parts.every(function(val) {
+                return val.future(0, counter)
+            })){
+                counter++;
+            }
+            this.futureParts.forEach(function(val){
+                ctx.fillStyle = colors[0]
+                ctx.fillRect(val.x * 20 + 1, val.y * 20 + 1, 18, 18);
+                grid[val.y][val.x] = 0
+            })
+            for (let i = 0; i < this.parts.length; i++) {
+                this.futureParts[i].x = this.parts[i].x;
+                this.futureParts[i].c = this.parts[i].c;
+                this.futureParts[i].y = this.parts[i].y + counter - 1;
             }
         }
         drop(){
@@ -203,21 +223,27 @@ window.onload = function() {
         }
 
         function draw() {
-
+            active.showFuture();
+            active.futureParts.forEach(function(val){
+                ctx.fillStyle = previewColors[val.c];
+                ctx.fillRect(val.x * 20 + 1, val.y * 20 + 1, 18, 18);
+            })
             active.parts.forEach(function(val) {
-                ctx.fillStyle = colors[val.c]
+                ctx.fillStyle = colors[val.c];
                 ctx.fillRect(val.x * 20 + 1, val.y * 20 + 1, 18, 18);
             })
         }
     }
-    let active = new tetrimino(0, 0, Math.floor(Math.random() * 6) + 1)
+    let active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
     let cd = 30;
     let rotate = true;
-    let hardDrop = false;
+    let hardDrop = true;
     let kcd = 0;
     let key = [];
     let game = true;
     document.body.onkeydown = function(e) {
+        if(e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32)
+        e.preventDefault();
         if (rotate && e.keyCode === 38) {
             rotate = false;
             active.rotate(1)
@@ -225,6 +251,7 @@ window.onload = function() {
             kcd = 4;
         }
         if(hardDrop && e.keyCode === 32){
+            hardDrop = false;
             active.drop();
             draw();
 
