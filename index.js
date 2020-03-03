@@ -76,6 +76,9 @@ window.onload = function() {
                 for (let i = 3; i >= 0; i--) {
                     this.parts[i].move(x, y);
                 }
+                if(y > 0){
+                    score++;
+                }
                 this.x = this.x + x;
                 this.y = this.y + y;
                 return true;
@@ -84,15 +87,19 @@ window.onload = function() {
                     grid[val.y][val.x] = val.c;
                 })
                 console.log(grid[23]);
+                let ln = 0;
                 grid.forEach(function(val, index) {
                     if (val.every(function(cell) {
                             return cell !== 0;
                         })) {
+                        ln++;
                         console.log("egg");
                         grid.splice(index, 1);
                         grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
                     }
                 })
+                score += [0,40,100,300,1200][ln];
+                lines += ln;
 
                 for (let i = 0; i < 24; i++) {
                     for (let j = 0; j < 10; j++) {
@@ -124,9 +131,11 @@ window.onload = function() {
             }
         }
         drop(){
+            let ascore = score;
             while(this.move(0,1)){
                 
             }
+            score += (score - ascore);
         }
         check(n) {
             let a = this;
@@ -230,6 +239,8 @@ window.onload = function() {
             ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
         })
     }
+    let score = 0;
+    let lines = 0;
     let active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
     let cd = 30*17;
     let rotate = true;
@@ -315,6 +326,8 @@ window.onload = function() {
             draw();
             cd = 20*17;
         }
+        document.getElementById("score").textContent = score;
+        document.getElementById("lines").textContent = lines;
         if (game) {
             requestAnimationFrame(loop);
         } else {
