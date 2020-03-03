@@ -3,7 +3,7 @@ window.onload = function() {
     previewColors = ["#ffffff", "#b2f7fb", "#b1befb", "#fbe595", "#fbf994", "#a7fb94", "#d693fe", "#fe9393"];
     class tetrimino {
         constructor(x, y, c) {
-            this.c = c
+            this.c = c;
             this.parts = [];
             this.futureParts = [new tetrim(0,0,0), new tetrim(0,0,0), new tetrim(0,0,0), new tetrim(0,0,0)];
             this.x = x;
@@ -12,7 +12,7 @@ window.onload = function() {
             //facing right 1
             //facing down 2
             //facing left 3
-            console.log("YA:" + c)
+            console.log("YA:" + c);
 
             switch (c) {
 
@@ -62,22 +62,22 @@ window.onload = function() {
                     break;
             }
             if (!this.parts.every(function(val) {
-                    return 0 === grid[val.y][val.x]
+                    return 0 === grid[val.y][val.x];
                 })) {
-                console.log("e")
+                console.log("e");
                 game = false;
             }
 
         }
         move(x, y) {
             if (this.parts.every(function(val) {
-                    return val.future(x, y)
+                    return val.future(x, y);
                 })) {
                 for (let i = 3; i >= 0; i--) {
-                    this.parts[i].move(x, y)
+                    this.parts[i].move(x, y);
                 }
-                this.x = this.x + x
-                this.y = this.y + y
+                this.x = this.x + x;
+                this.y = this.y + y;
                 return true;
             } else if (y != 0) {
                 active.parts.forEach(function(val) {
@@ -88,9 +88,9 @@ window.onload = function() {
                     if (val.every(function(cell) {
                             return cell !== 0;
                         })) {
-                        console.log("egg")
+                        console.log("egg");
                         grid.splice(index, 1);
-                        grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0])
+                        grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
                     }
                 })
 
@@ -109,14 +109,13 @@ window.onload = function() {
         showFuture(){
             let counter = 0;
             while(this.parts.every(function(val) {
-                return val.future(0, counter)
+                return val.future(0, counter);
             })){
                 counter++;
             }
             this.futureParts.forEach(function(val){
-                ctx.fillStyle = colors[0]
+                ctx.fillStyle = colors[0];
                 ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
-                grid[val.y][val.x] = 0
             })
             for (let i = 0; i < this.parts.length; i++) {
                 this.futureParts[i].x = this.parts[i].x;
@@ -138,8 +137,8 @@ window.onload = function() {
                     return grid[val.ny][val.nx + n] === 0;
                 })) {
                 this.parts.forEach(function(val) {
-                    val.x = val.nx + n
-                    val.y = val.ny
+                    val.x = val.nx + n;
+                    val.y = val.ny;
                 })
                 a.x += n;
                 return true;
@@ -148,11 +147,11 @@ window.onload = function() {
         }
         rotate(d) {
             let a = this;
-            a.cx = a.x + 1
-            a.cy = a.y + 1
+            a.cx = a.x + 1;
+            a.cy = a.y + 1;
             if (a.c === 1) {
-                a.cx += .5
-                a.cy += .5
+                a.cx += .5;
+                a.cy += .5;
             }
             if (a.c === 4) {
                 return true;
@@ -160,57 +159,53 @@ window.onload = function() {
             //rotating right
             if (d === 1) {
                 this.parts.forEach(function(val) {
-
-                    ctx.fillStyle = colors[0]
+                    ctx.fillStyle = colors[0];
                     ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
-                    let y = val.y
-                    let x = val.x
-                    val.nx = (y - a.cy) * -1 + a.cx
-                    val.ny = (x - a.cx) + a.cy
+                    let y = val.y;
+                    let x = val.x;
+                    val.nx = (y - a.cy) * -1 + a.cx;
+                    val.ny = (x - a.cx) + a.cy;
                 })
                 if (!a.check(0)) {
                     if (!a.check(-1)) {
-                        a.check(1)
+                        a.check(1);
                     }
                 }
             }
+            /*if (d === -1) {
 
-
-            if (d === -1) {
-
-            }
+            }*/
         }
     }
 
     class tetrim {
         constructor(x, y, c) {
-            this.x = x
-            this.y = y
-            this.c = c
+            this.x = x;
+            this.y = y;
+            this.c = c;
         }
         move(x, y) {
             ctx.fillStyle = colors[0]
             ctx.fillRect(this.x * 20 + 2, this.y * 20 + 2, 18, 18);
-            grid[this.y][this.x] = 0
+            grid[this.y][this.x] = 0;
             this.x = this.x + x;
             this.y = this.y + y;
             //grid[this.x][this.y] =  
-
         }
         future(x, y) {
             if (grid[this.y + y] === undefined) return false;
-            return grid[this.y + y][this.x + x] === 0
+            return grid[this.y + y][this.x + x] === 0;
         }
     }
     //10x24
     var c = document.getElementById("cynthiaisdum");
     var ctx = c.getContext("2d");
     //Generate grid
-    let grid = []
+    let grid = [];
     for (let i = 0; i < 24; i++) {
-        grid.push([])
+        grid.push([]);
         for (let j = 0; j < 10; j++) {
-            grid[i].push(0)
+            grid[i].push(0);
         }
     }
 
@@ -236,7 +231,7 @@ window.onload = function() {
         })
     }
     let active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
-    let cd = 30;
+    let cd = 30*17;
     let rotate = true;
     let hardDrop = true;
     let kcd = 0;
@@ -247,8 +242,8 @@ window.onload = function() {
         e.preventDefault();
         if (rotate && e.keyCode === 38) {
             rotate = false;
-            active.rotate(1)
-            draw()
+            active.rotate(1);
+            draw();
             kcd = 4;
         }
         if(hardDrop && e.keyCode === 32){
@@ -259,7 +254,7 @@ window.onload = function() {
         }
 
         if (key.indexOf(e.keyCode) == -1) {
-            key.push(e.keyCode)
+            key.push(e.keyCode);
             kcd = 0;
         }
         if (e.keyCode >= 37 && e.keyCode <= 40) {
@@ -286,43 +281,47 @@ window.onload = function() {
             }
 
         }
-        requestAnimationFrame(redshift)
+        requestAnimationFrame(redshift);
     }
-
+    let then = Date.now();
+    let now = Date.now();
     function loop() {
-        cd--
-        kcd--
+        now = Date.now();
+        let delta = now-then;
+        cd -= delta;
+        kcd -= delta;
+        then = Date.now();
         if (kcd <= 0) {
             if (key.indexOf(37) != -1) {
-                active.move(-1, 0)
-                draw()
-                kcd = 10;
+                active.move(-1, 0);
+                draw();
+                kcd = 10*17;
             }
             if (key.indexOf(39) != -1) {
-                active.move(1, 0)
-                draw()
-                kcd = 10;
+                active.move(1, 0);
+                draw();
+                kcd = 10*17;
             }
             if (key.indexOf(40) != -1) {
-                active.move(0, 1)
-                draw()
-                cd = 20;
-                kcd = 7;
+                active.move(0, 1);
+                draw();
+                cd = 20*17;
+                kcd = 7*17;
             }
 
         }
         if (cd <= 0) {
-            active.move(0, 1)
-            draw()
-            cd = 20;
+            active.move(0, 1);
+            draw();
+            cd = 20*17;
         }
         if (game) {
-            requestAnimationFrame(loop)
+            requestAnimationFrame(loop);
         } else {
-            requestAnimationFrame(redshift)
+            requestAnimationFrame(redshift);
         }
     }
-    requestAnimationFrame(loop)
+    requestAnimationFrame(loop);
 
-    draw()
+    draw();
 }
