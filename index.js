@@ -218,25 +218,30 @@ window.onload = function() {
             grid[i].push(0);
         }
     }
-
     for (let i = 0; i < 24; i++) {
         for (let j = 0; j < 10; j++) {
-            //ctx.fillStyle = colors[grid[i][j]];
-            //ctx.fillRect(i * 20, j * 20, 20, 20);
             ctx.rect(j * 20 + 1, i * 20 + 1, 20, 20);
             ctx.stroke();
         }
     }
-    /*
-    tiny grid
-    for(let i = 0; i < 48;i++){
-        for(let j = 0; j < 4;j++){
-            ctx.rect(j * 10 + 1 + 10 * 20, i * 10 + 1, 10, 10);
-            ctx.stroke();
-        }
-    }
-    */
-    ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20);
+   let score = 0;
+   let lines = 0;
+   let active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
+   let cd = 30*17;
+   let rotate = true;
+   let hardDrop = true;
+   let kcd = 0;
+   let key = [];
+   let game = false;
+   let nextPc = [];
+
+   let pause = false;
+   let allowPause = true;
+
+   for(i = 0; i < 10;i++){
+       nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
+   }
+    ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20); //Fix gray error
     ctx.stroke();
     function draw() {
         active.showFuture();
@@ -248,7 +253,7 @@ window.onload = function() {
             ctx.fillStyle = colors[val.c];
             ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
         })
-        for(let i = 0; i < 12;i++){
+        for(let i = 0; i < 10;i++){
             ctx.fillStyle = colors[nextPc[i].c];
             nextPc[i].parts.forEach(function(part){
                 ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + i * 40, 10, 10);
@@ -256,21 +261,8 @@ window.onload = function() {
         }
     }
 
-    let score = 0;
-    let lines = 0;
-    let active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
-    let cd = 30*17;
-    let rotate = true;
-    let hardDrop = true;
-    let kcd = 0;
-    let key = [];
-    let game = true;
-    let nextPc = [];
-    for(i = 0; i < 12;i++){
-        nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
-    }
     function next(){
-        for(i = 0; i < 12;i++){
+        for(i = 0; i < 10;i++){
             ctx.fillStyle = colors[0];
             nextPc[i].parts.forEach(function(part){
                 ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + i * 40, 10, 10);
@@ -279,12 +271,32 @@ window.onload = function() {
         nextPc.shift();
         nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
     }
+    function togglePause(){
+        pause = !pause;
+        if(pause){
+            document.getElementById("cynthiaisdum").style = "filter:blur(4px)";
+            document.getElementById("pause").textContent = "Unpause";
+        }
+        if(!pause){
+            document.getElementById("cynthiaisdum").style = "filter:blur(0px)";
+            document.getElementById("pause").textContent = "Pause";
+            requestAnimationFrame(loop);
+        }
+    }
     document.body.onkeydown = function(e) {
         if(e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32)
         e.preventDefault();
+
         if(!game){
             return;
         }
+        if(e.keyCode === 80 && allowPause){
+            togglePause();
+            if(pause){
+                return;
+            }
+        }
+
         if (rotate && e.keyCode === 38) {
             rotate = false;
             active.rotate(1);
@@ -308,8 +320,11 @@ window.onload = function() {
 
     };
     document.body.onkeyup = function(e) {
-        if(!game){
+        if(!game || pause){
             return;
+        }
+        if(e.keyCode === 80){
+            allowPause = true;
         }
         if (e.keyCode === 38) {
             rotate = true;
@@ -321,7 +336,7 @@ window.onload = function() {
         kcd = 0;
     }
 
-    function redshift() {
+    function gameOver() {
         /*for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
                 ctx.fillStyle = "rgb(" + 180 + "," + 180 + "," + 244 + ")";
@@ -329,9 +344,7 @@ window.onload = function() {
             }
 
         }
-        */
-        requestAnimationFrame(redshift);
-        document.write("you are bad at video games!");
+        */  
     }
     let then = Date.now();
     let now = Date.now();
@@ -368,12 +381,21 @@ window.onload = function() {
         document.getElementById("score").textContent = score;
         document.getElementById("lines").textContent = lines;
         if (game) {
-            requestAnimationFrame(loop);
+            if(!pause){
+                requestAnimationFrame(loop);
+            }
         } else {
-            requestAnimationFrame(redshift);
+            requestAnimationFrame(gameOver);
         }
     }
-    requestAnimationFrame(loop);
-
-    draw();
+    document.getElementById("start").onclick = function(){
+        document.getElementById("start").textContent = "Restart";
+        if(!game){
+            document.getElementById("cynthiaisdum").style = "filter:blur(0px)";
+            game = true;
+            requestAnimationFrame(loop);
+            draw();
+        }
+    }
+    document.getElementById("pause").onclick = togglePause;
 }

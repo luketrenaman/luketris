@@ -11,15 +11,51 @@
     gtag('config', 'UA-156935778-1');
     </script>
     <style>
-        /*canvas{
-            transition: 1s all;
-            filter:blur(0px);
+        canvas{
+            transition: 0.2s all;
         }
+        /*
         canvas:hover{
             filter:blur(8px);
         }*/
         body{
             font-family: sans-serif;
+            width:100%;
+            margin:0px;
+        }
+        .side-panel{
+            display:inline-block;
+        }
+        button{
+            padding:1rem;
+            background:white;
+            border: 2px solid black;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:18px;
+            transition: 0.2s background;
+            width:8rem;
+            margin:1rem;
+        }
+        button:hover{
+            background:#ddd;
+        }
+        button:focus {
+            outline:0;
+        }
+
+        .game{
+            margin:4rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width:100%;
+        }
+        .title{
+            text-align:center;
+        }
+        .margin{
+            margin:1rem 5vw;
         }
         /*div {
         display: flex;
@@ -31,10 +67,22 @@
     </style>
 </head>
 <body>
-    <div>
-        <canvas id = "cynthiaisdum" width="300" height = "500"></canvas>
-        <p>Score: <span id = "score"></span></p>
-        <p>Lines: <span id = "lines"></span></p>
-    </div>
+    <h1 class = "title">Tetris</h1>
+
+        <div class = "game">
+            <canvas id="cynthiaisdum" width="260" height="484"></canvas>
+            <div class="side-panel">
+                <button id = "start">Start</button><button id = "pause">Pause</button>
+                <p>Score: <span id="score"></span></p>
+                <p>Lines: <span id="lines"></span></p>
+            </div>
+        </div>
+        <div class = "margin">
+            <h1>Instructions</h1>
+            <p>Move a piece using ASD or the left, right, and down arrow keys.</p>
+            <p>Rotate a piece by using the up arrow key.</p>
+            <p>Instantly drop a piece using space bar.</p>
+            <p>Pause the game by pressing the p key.</p>
+        </div>
 </body>
 </html>
