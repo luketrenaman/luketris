@@ -1,6 +1,6 @@
 window.onload = function() {
-    colors = ["#ffffff", "#42ebf4", "#415ff4", "#f7c922", "#f7f321", "#48f721", "#aa1efc", "#fc1e1e"];
-    previewColors = ["#ffffff", "#b2f7fb", "#b1befb", "#fbe595", "#fbf994", "#a7fb94", "#d693fe", "#fe9393"];
+    let colors = ["#ffffff", "#42ebf4", "#415ff4", "#f7c922", "#f7f321", "#48f721", "#aa1efc", "#fc1e1e"];
+    let previewColors = ["#ffffff", "#b2f7fb", "#b1befb", "#fbe595", "#fbf994", "#a7fb94", "#d693fe", "#fe9393"];
     class tetrimino {
         constructor(x, y, c) {
             this.c = c;
@@ -12,7 +12,6 @@ window.onload = function() {
             //facing right 1
             //facing down 2
             //facing left 3
-            console.log("YA:" + c);
 
             switch (c) {
 
@@ -64,7 +63,6 @@ window.onload = function() {
             if (!this.parts.every(function(val) {
                     return 0 === grid[val.y][val.x];
                 })) {
-                console.log("e");
                 game = false;
             }
 
@@ -86,14 +84,12 @@ window.onload = function() {
                 active.parts.forEach(function(val) {
                     grid[val.y][val.x] = val.c;
                 })
-                console.log(grid[23]);
                 let ln = 0;
                 grid.forEach(function(val, index) {
                     if (val.every(function(cell) {
                             return cell !== 0;
                         })) {
                         ln++;
-                        console.log("egg");
                         grid.splice(index, 1);
                         grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
                     }
@@ -141,7 +137,6 @@ window.onload = function() {
         check(n) {
             let a = this;
             //Check if rotation is possible with offset of n
-            console.log(n);
             if (this.parts.every(function(val) {
                     if (grid[val.ny] === undefined) return false;
                     return grid[val.ny][val.nx + n] === 0;
@@ -211,38 +206,45 @@ window.onload = function() {
     var c = document.getElementById("cynthiaisdum");
     var ctx = c.getContext("2d");
     //Generate grid
-    let grid = [];
-    for (let i = 0; i < 24; i++) {
-        grid.push([]);
-        for (let j = 0; j < 10; j++) {
-            grid[i].push(0);
+    let grid, score, lines, active, cd, rotate, hardDrop, kcd, key, game, nextPc, pause, allowPause;
+    function drawGrid(){
+        for (let i = 0; i < 24; i++) {
+            for (let j = 0; j < 10; j++) {
+                ctx.rect(j * 20 + 1, i * 20 + 1, 20, 20);
+                ctx.stroke();
+            }
         }
     }
-    for (let i = 0; i < 24; i++) {
-        for (let j = 0; j < 10; j++) {
-            ctx.rect(j * 20 + 1, i * 20 + 1, 20, 20);
-            ctx.stroke();
+    function reset(){
+        ctx.clearRect(0, 0, c.width, c.height);
+
+        grid = [];
+        for (let i = 0; i < 24; i++) {
+            grid.push([]);
+            for (let j = 0; j < 10; j++) {
+                grid[i].push(0);
+            }
         }
+        drawGrid();
+    score = 0;
+    lines = 0;
+    active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
+    cd = 30*17;
+    rotate = true;
+    hardDrop = true;
+    kcd = 0;
+    key = [];
+    game = true;
+    nextPc = [];
+
+    pause = false;
+    allowPause = true;
+    for(i = 0; i < 10;i++){
+        nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
     }
-   let score = 0;
-   let lines = 0;
-   let active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
-   let cd = 30*17;
-   let rotate = true;
-   let hardDrop = true;
-   let kcd = 0;
-   let key = [];
-   let game = false;
-   let nextPc = [];
-
-   let pause = false;
-   let allowPause = true;
-
-   for(i = 0; i < 10;i++){
-       nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
-   }
-    ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20); //Fix gray error
-    ctx.stroke();
+        ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20); //Fix gray error
+        ctx.stroke();
+    }
     function draw() {
         active.showFuture();
         active.futureParts.forEach(function(val){
@@ -390,12 +392,10 @@ window.onload = function() {
     }
     document.getElementById("start").onclick = function(){
         document.getElementById("start").textContent = "Restart";
-        if(!game){
             document.getElementById("cynthiaisdum").style = "filter:blur(0px)";
-            game = true;
+            reset();
             requestAnimationFrame(loop);
             draw();
-        }
     }
     document.getElementById("pause").onclick = togglePause;
 }
