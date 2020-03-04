@@ -299,7 +299,7 @@ window.onload = function() {
             }
         }
 
-        if (rotate && e.keyCode === 38) {
+        if (rotate && (e.keyCode === 38 || e.keyCode === 87)) {
             rotate = false;
             active.rotate(1);
             draw();
@@ -316,9 +316,6 @@ window.onload = function() {
             key.push(e.keyCode);
             kcd = 0;
         }
-        if (e.keyCode >= 37 && e.keyCode <= 40) {
-            return false;
-        }
 
     };
     document.body.onkeyup = function(e) {
@@ -328,7 +325,7 @@ window.onload = function() {
         if(e.keyCode === 80){
             allowPause = true;
         }
-        if (e.keyCode === 38) {
+        if (e.keyCode === 38 || e.keyCode === 87) {
             rotate = true;
         }
         if (e.keyCode === 32) {
@@ -357,17 +354,17 @@ window.onload = function() {
         kcd -= delta;
         then = Date.now();
         if (kcd <= 0) {
-            if (key.indexOf(37) != -1) {
+            if (key.indexOf(37) != -1 || key.indexOf(65) != -1) {
                 active.move(-1, 0);
                 draw();
                 kcd = 10*17;
             }
-            if (key.indexOf(39) != -1) {
+            if (key.indexOf(39) != -1 || key.indexOf(68) != -1) {
                 active.move(1, 0);
                 draw();
                 kcd = 10*17;
             }
-            if (key.indexOf(40) != -1) {
+            if (key.indexOf(40) != -1 || key.indexOf(83) != -1) {
                 active.move(0, 1);
                 draw();
                 cd = 20*17;
