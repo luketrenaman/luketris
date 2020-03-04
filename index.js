@@ -108,7 +108,8 @@ window.onload = function() {
                     }
                     //active = new tetrimino(0, 0, 1)
                 }
-                active = new tetrimino(3, 0, Math.round(Math.random() * 6) + 1);
+                active = nextPc[0];
+                next();
                 return false;
 
             }
@@ -226,6 +227,15 @@ window.onload = function() {
             ctx.stroke();
         }
     }
+    /*
+    tiny grid
+    for(let i = 0; i < 48;i++){
+        for(let j = 0; j < 4;j++){
+            ctx.rect(j * 10 + 1 + 10 * 20, i * 10 + 1, 10, 10);
+            ctx.stroke();
+        }
+    }
+    */
     ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20);
     ctx.stroke();
     function draw() {
@@ -238,7 +248,14 @@ window.onload = function() {
             ctx.fillStyle = colors[val.c];
             ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
         })
+        for(let i = 0; i < 12;i++){
+            ctx.fillStyle = colors[nextPc[i].c];
+            nextPc[i].parts.forEach(function(part){
+                ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + i * 40, 10, 10);
+            })
+        }
     }
+
     let score = 0;
     let lines = 0;
     let active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
@@ -248,9 +265,26 @@ window.onload = function() {
     let kcd = 0;
     let key = [];
     let game = true;
+    let nextPc = [];
+    for(i = 0; i < 12;i++){
+        nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
+    }
+    function next(){
+        for(i = 0; i < 12;i++){
+            ctx.fillStyle = colors[0];
+            nextPc[i].parts.forEach(function(part){
+                ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + i * 40, 10, 10);
+            })
+        }
+        nextPc.shift();
+        nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
+    }
     document.body.onkeydown = function(e) {
         if(e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32)
         e.preventDefault();
+        if(!game){
+            return;
+        }
         if (rotate && e.keyCode === 38) {
             rotate = false;
             active.rotate(1);
@@ -274,6 +308,9 @@ window.onload = function() {
 
     };
     document.body.onkeyup = function(e) {
+        if(!game){
+            return;
+        }
         if (e.keyCode === 38) {
             rotate = true;
         }
@@ -285,14 +322,16 @@ window.onload = function() {
     }
 
     function redshift() {
-        for (let i = 0; i < 24; i++) {
+        /*for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
-                ctx.fillStyle = "rgb(" + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + "," + Math.floor(Math.random() * 255) + ")";
+                ctx.fillStyle = "rgb(" + 180 + "," + 180 + "," + 244 + ")";
                 ctx.fillRect(j * 20, i * 20, 20, 20);
             }
 
         }
+        */
         requestAnimationFrame(redshift);
+        document.write("you are bad at video games!");
     }
     let then = Date.now();
     let now = Date.now();
