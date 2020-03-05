@@ -214,6 +214,8 @@ window.onload = function() {
                 ctx.stroke();
             }
         }
+        ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20); //Fix gray error
+        ctx.stroke();
     }
     function reset(){
         ctx.clearRect(0, 0, c.width, c.height);
@@ -239,11 +241,9 @@ window.onload = function() {
 
     pause = false;
     allowPause = true;
-    for(i = 0; i < 10;i++){
+    for(i = 0; i < 3;i++){
         nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
     }
-        ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20); //Fix gray error
-        ctx.stroke();
     }
     function draw() {
         active.showFuture();
@@ -255,7 +255,7 @@ window.onload = function() {
             ctx.fillStyle = colors[val.c];
             ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
         })
-        for(let i = 0; i < 10;i++){
+        for(let i = 0; i < 3;i++){
             ctx.fillStyle = colors[nextPc[i].c];
             nextPc[i].parts.forEach(function(part){
                 ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + i * 40, 10, 10);
@@ -264,7 +264,7 @@ window.onload = function() {
     }
 
     function next(){
-        for(i = 0; i < 10;i++){
+        for(i = 0; i < 3;i++){
             ctx.fillStyle = colors[0];
             nextPc[i].parts.forEach(function(part){
                 ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + i * 40, 10, 10);
@@ -285,6 +285,7 @@ window.onload = function() {
             requestAnimationFrame(loop);
         }
     }
+    drawGrid();
     document.body.onkeydown = function(e) {
         if(e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32)
         e.preventDefault();
@@ -294,9 +295,9 @@ window.onload = function() {
         }
         if(e.keyCode === 80 && allowPause){
             togglePause();
-            if(pause){
-                return;
-            }
+        }
+        if(pause){
+            return;
         }
 
         if (rotate && (e.keyCode === 38 || e.keyCode === 87)) {
