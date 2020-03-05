@@ -242,7 +242,7 @@ window.onload = function() {
     pause = false;
     allowPause = true;
     for(i = 0; i < 3;i++){
-        nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
+        nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1));
     }
     }
     function draw() {
@@ -271,7 +271,7 @@ window.onload = function() {
             })
         }
         nextPc.shift();
-        nextPc.push(new tetrimino(3, 0, Math.round(Math.random() * 6) + 1));
+        nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1));
     }
     function togglePause(){
         pause = !pause;
