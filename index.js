@@ -106,6 +106,7 @@ window.onload = function() {
                 }
                 active = nextPc[0];
                 next();
+                allowHold = true;
                 return false;
 
             }
@@ -117,10 +118,7 @@ window.onload = function() {
             })){
                 counter++;
             }
-            this.futureParts.forEach(function(val){
-                ctx.fillStyle = colors[0];
-                ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
-            })
+            clearParts(this.futureParts);
             for (let i = 0; i < this.parts.length; i++) {
                 this.futureParts[i].x = this.parts[i].x;
                 this.futureParts[i].c = this.parts[i].c;
@@ -163,13 +161,10 @@ window.onload = function() {
             }
             //rotating right
             if (d === 1) {
+                clearParts(this.parts);
                 this.parts.forEach(function(val) {
-                    ctx.fillStyle = colors[0];
-                    ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
-                    let y = val.y;
-                    let x = val.x;
-                    val.nx = (y - a.cy) * -1 + a.cx;
-                    val.ny = (x - a.cx) + a.cy;
+                    val.nx = (val.y - a.cy) * -1 + a.cx;
+                    val.ny = (val.x - a.cx) + a.cy;
                 })
                 if (!a.check(0)) {
                     if (!a.check(-1)) {
@@ -206,7 +201,7 @@ window.onload = function() {
     var c = document.getElementById("cynthiaisdum");
     var ctx = c.getContext("2d");
     //Generate grid
-    let grid, score, lines, active, cd, rotate, hardDrop, kcd, key, game, nextPc, pause, allowPause;
+    let grid, score, lines, active, cd, rotate, hardDrop, kcd, key, game, nextPc, pause, allowPause, heldPiece, allowHold;
     function drawGrid(){
         for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
@@ -241,6 +236,9 @@ window.onload = function() {
 
     pause = false;
     allowPause = true;
+
+    heldPiece; //no piece is being held
+    allowHold = true; //able after a new piece is dropped
     for(i = 0; i < 3;i++){
         nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1));
     }
@@ -273,6 +271,12 @@ window.onload = function() {
         nextPc.shift();
         nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1));
     }
+    function clearParts(parts){
+        parts.forEach(function(val){
+            ctx.fillStyle = colors[0];
+            ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
+        })
+    }
     function togglePause(){
         pause = !pause;
         if(pause){
@@ -288,29 +292,43 @@ window.onload = function() {
     drawGrid();
     document.body.onkeydown = function(e) {
         if(e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32)
-        e.preventDefault();
+        e.preventDefault(); //prevent scrolling
 
         if(!game){
             return;
         }
         if(e.keyCode === 80 && allowPause){
-            togglePause();
+            togglePause(); //if pressing key to pause, and pausing is allowed, inverse pause condition
         }
         if(pause){
             return;
         }
 
-        if (rotate && (e.keyCode === 38 || e.keyCode === 87)) {
+        if (rotate && (e.keyCode === 38 || e.keyCode === 87)) { //Rotate using W and up
             rotate = false;
             active.rotate(1);
             draw();
             kcd = 4;
         }
-        if(hardDrop && e.keyCode === 32){
+        if(hardDrop && e.keyCode === 32){ //Hard drop using space
             hardDrop = false;
             active.drop();
             draw();
 
+        }
+        if(allowHold && e.keyCode === 67){
+            clearParts(active.parts);
+            clearParts(active.futureParts);
+            let type = active.c;
+            if(heldPiece){
+                active = heldPiece;
+            } else{
+                active = nextPc[0];
+            }
+            heldPiece = new tetrimino(3,0,type);
+            next();
+            allowHold = false;
+            cd = 0;
         }
 
         if (key.indexOf(e.keyCode) == -1) {
