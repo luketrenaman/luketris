@@ -209,8 +209,10 @@ window.onload = function() {
                 ctx.stroke();
             }
         }
-        ctx.rect(11 * 20 + 1, 25 * 20 + 1, 20, 20); //Fix gray error
-        ctx.stroke();
+        ctx.fillStyle = "#000000";
+        ctx.font = "16px sans-serif";
+        ctx.fillText("Held:", 10 * 20 + 30, 10 * 40);
+
     }
     function reset(){
         ctx.clearRect(0, 0, c.width, c.height);
@@ -237,7 +239,7 @@ window.onload = function() {
     pause = false;
     allowPause = true;
 
-    heldPiece; //no piece is being held
+    heldPiece = null; //no piece is being held
     allowHold = true; //able after a new piece is dropped
     for(i = 0; i < 3;i++){
         nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1));
@@ -321,11 +323,19 @@ window.onload = function() {
             clearParts(active.futureParts);
             let type = active.c;
             if(heldPiece){
+                ctx.fillStyle = colors[0];
+                heldPiece.parts.forEach(function(part){
+                    ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + 11 * 40, 10, 10);
+                })
                 active = heldPiece;
             } else{
                 active = nextPc[0];
             }
             heldPiece = new tetrimino(3,0,type);
+            ctx.fillStyle = colors[type];
+            heldPiece.parts.forEach(function(part){
+                ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + 11 * 40, 10, 10);
+            });
             next();
             allowHold = false;
             cd = 0;
