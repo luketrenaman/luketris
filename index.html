@@ -5,6 +5,8 @@
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-156935778-1"></script>
     <meta name="description" content="Play Luketris now!">
     <meta name="keywords" content="luke trenaman luketris game">
+    <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1">
+
     <title>Luketris | luketrenaman.com</title>
     <link rel="author" href="https://github.com/luketrenaman" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
@@ -42,11 +44,13 @@
             width:8rem;
             margin:1rem;
             user-select:none;
+	    -ms-touch-action: manipulation;	/* IE10  */
+	    touch-action: manipulation;		/* IE11+ */
         }
         button:hover{
             background:#ddd;
         }
-        button:focus {
+        button:focus,#dpad button:focus {
             outline:0;
         }
 
@@ -63,6 +67,47 @@
         .margin{
             margin:1rem 5vw;
         }
+        #d-pad{
+            visibility:hidden;
+            position: fixed;
+            right:0%;
+            bottom:0%;
+            opacity:0.8;
+        }
+        #d-pad button{
+            margin:0px;
+            padding:6vh 6vw;
+            background:white;
+            border: 2px solid black;
+            border-radius:8px;
+            cursor:pointer;
+            font-size:3vw;
+            width:1vw;
+            height:1vh;
+            user-select:none;
+        }
+        #d-pad #space{
+            padding:6vh 16vw;
+            width:100%;
+        }
+        @media only screen and (max-width: 760px) {
+            #d-pad { visibility:visible;}
+            .game{
+                margin:0 0;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width:100%;
+            }
+            #cynthiaisdum{
+                height:100vh;
+                width:100vw;
+            }
+        }
+        /*
+        width
+        height is 175%
+        */
         /*div {
         display: flex;
         justify-content: center;
@@ -74,13 +119,23 @@
 </head>
 <body>
     <h1 class = "title">Luketris</h1>
-
         <div class = "game">
-            <canvas id="cynthiaisdum" width="468" height="630"></canvas><!-- width should technically be 260-->
+            <canvas id="cynthiaisdum" width="360" height="630"></canvas><!-- width should technically be 260-->
             <div class="side-panel">
-                <button id = "start">Start</button><button id = "pause">Pause</button>
+                <a href = "#cynthiaisdum"><button id = "start">Start</button></a><button id = "pause">Pause</button>
                 <p>Score: <span id="score"></span></p>
                 <p>Lines: <span id="lines"></span></p>
+            </div>
+            <div id = "d-pad">
+                <button id = "hold">h</button>
+                <button id = "rotate">^</button>
+                <button id = "pauseKey">p</button>
+                <br>
+                <button id = "left">&lt;</button>
+                <button id = "down">v</button>
+                <button id = "right">&gt;</button>
+                <br>
+                <button id = "space">vvv</button>
             </div>
         </div>
         <div class = "margin">

@@ -1,8 +1,35 @@
 window.onload = function() {
+    function emulateKeycode(elem, keycode) {
+        document.getElementById(elem).onclick = function() {
+            var evt = new KeyboardEvent('keydown', {
+                'keyCode': keycode,
+                'which': keycode
+            });
+            document.dispatchEvent(evt);
+            setTimeout(function() {
+                var evt2 = new KeyboardEvent('keyup', {
+                    'keyCode': keycode,
+                    'which': keycode
+                });
+                document.dispatchEvent(evt2);
+            }, 10)
+        }
+    }
+    emulateKeycode("hold", 67);
+    emulateKeycode("rotate", 38);
+    emulateKeycode("pauseKey", 80);
+    emulateKeycode("left", 37);
+    emulateKeycode("down", 40);
+    emulateKeycode("right", 39);
+    emulateKeycode("space",32);
+    if (/Mobi/.test(navigator.userAgent)) {
+        document.getElementById("d-pad").style = "visibility:visible";
+    }
     let colors = ["#ffffff", "#42ebf4", "#415ff4", "#f7c922", "#f7f321", "#48f721", "#aa1efc", "#fc1e1e"];
     let previewColors = ["#ffffff", "#b2f7fb", "#b1befb", "#fbe595", "#fbf994", "#a7fb94", "#d693fe", "#fe9393"];
     let preload = {};
-    function add(src){
+
+    function add(src) {
         let image = new Image();
         image.src = src;
         preload[src] = image;
@@ -39,7 +66,7 @@ window.onload = function() {
         constructor(x, y, c) {
             this.c = c;
             this.parts = [];
-            this.futureParts = [new tetrim(0,0,0), new tetrim(0,0,0), new tetrim(0,0,0), new tetrim(0,0,0)];
+            this.futureParts = [new tetrim(0, 0, 0), new tetrim(0, 0, 0), new tetrim(0, 0, 0), new tetrim(0, 0, 0)];
             this.x = x;
             this.y = y;
             //facing up 0
@@ -50,48 +77,48 @@ window.onload = function() {
             switch (c) {
 
                 case 1:
-                    this.parts.push(new tetrim(x, y, c,"lukes/w-1.png"));
-                    this.parts.push(new tetrim(x, y + 1, c,"lukes/w-2.png"));
-                    this.parts.push(new tetrim(x, y + 2, c,"lukes/w-3.png"));
-                    this.parts.push(new tetrim(x, y + 3, c,"lukes/w-4.png"));
+                    this.parts.push(new tetrim(x, y, c, "lukes/w-1.png"));
+                    this.parts.push(new tetrim(x, y + 1, c, "lukes/w-2.png"));
+                    this.parts.push(new tetrim(x, y + 2, c, "lukes/w-3.png"));
+                    this.parts.push(new tetrim(x, y + 3, c, "lukes/w-4.png"));
                     break;
                 case 2:
-                    this.parts.push(new tetrim(x, y, c,"lukes/l2-1.png"));
-                    this.parts.push(new tetrim(x + 1, y , c,"lukes/l2-2.png"));
-                    this.parts.push(new tetrim(x, y + 1, c,"lukes/l2-3.png"));
-                    this.parts.push(new tetrim(x, y + 2, c,"lukes/l2-4.png"));
+                    this.parts.push(new tetrim(x, y, c, "lukes/l2-1.png"));
+                    this.parts.push(new tetrim(x + 1, y, c, "lukes/l2-2.png"));
+                    this.parts.push(new tetrim(x, y + 1, c, "lukes/l2-3.png"));
+                    this.parts.push(new tetrim(x, y + 2, c, "lukes/l2-4.png"));
                     break;
                 case 3:
-                    this.parts.push(new tetrim(x, y, c,"lukes/l1-1.png"));
-                    this.parts.push(new tetrim(x + 1, y, c,"lukes/l1-2.png"));
-                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/l1-3.png"));
-                    this.parts.push(new tetrim(x + 1, y + 2, c,"lukes/l1-4.png"));
+                    this.parts.push(new tetrim(x, y, c, "lukes/l1-1.png"));
+                    this.parts.push(new tetrim(x + 1, y, c, "lukes/l1-2.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c, "lukes/l1-3.png"));
+                    this.parts.push(new tetrim(x + 1, y + 2, c, "lukes/l1-4.png"));
                     break;
                 case 4:
-                    this.parts.push(new tetrim(x, y, c,"lukes/sq-tl.png"));
-                    this.parts.push(new tetrim(x + 1, y, c,"lukes/sq-tr.png"));
-                    this.parts.push(new tetrim(x, y + 1, c,"lukes/sq-bl.png"));
-                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/sq-br.png"));
+                    this.parts.push(new tetrim(x, y, c, "lukes/sq-tl.png"));
+                    this.parts.push(new tetrim(x + 1, y, c, "lukes/sq-tr.png"));
+                    this.parts.push(new tetrim(x, y + 1, c, "lukes/sq-bl.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c, "lukes/sq-br.png"));
                     break;
                 case 5:
-                    this.parts.push(new tetrim(x, y, c,"lukes/z1-1.png"));
-                    this.parts.push(new tetrim(x, y + 1, c,"lukes/z1-2.png"));
-                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/z1-3.png"));
-                    this.parts.push(new tetrim(x + 1, y + 2, c,"lukes/z1-4.png"));
+                    this.parts.push(new tetrim(x, y, c, "lukes/z1-1.png"));
+                    this.parts.push(new tetrim(x, y + 1, c, "lukes/z1-2.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c, "lukes/z1-3.png"));
+                    this.parts.push(new tetrim(x + 1, y + 2, c, "lukes/z1-4.png"));
                     break;
                 case 6:
-                    this.parts.push(new tetrim(x + 1, y, c,"lukes/z2-1.png"));
-                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/z2-2.png"));
-                    this.parts.push(new tetrim(x, y + 1, c,"lukes/z2-3.png"));
-                    this.parts.push(new tetrim(x, y + 2, c,"lukes/z2-4.png"));
+                    this.parts.push(new tetrim(x + 1, y, c, "lukes/z2-1.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c, "lukes/z2-2.png"));
+                    this.parts.push(new tetrim(x, y + 1, c, "lukes/z2-3.png"));
+                    this.parts.push(new tetrim(x, y + 2, c, "lukes/z2-4.png"));
                     break;
 
                 case 7:
 
-                    this.parts.push(new tetrim(x, y, c,"lukes/t-1.png"));
-                    this.parts.push(new tetrim(x + 1, y, c,"lukes/t-2.png"));
-                    this.parts.push(new tetrim(x + 2, y, c,"lukes/t-3.png"));
-                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/t-4.png"));
+                    this.parts.push(new tetrim(x, y, c, "lukes/t-1.png"));
+                    this.parts.push(new tetrim(x + 1, y, c, "lukes/t-2.png"));
+                    this.parts.push(new tetrim(x + 2, y, c, "lukes/t-3.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c, "lukes/t-4.png"));
                     break;
             }
             if (!this.parts.every(function(val) {
@@ -108,7 +135,7 @@ window.onload = function() {
                 for (let i = 3; i >= 0; i--) {
                     this.parts[i].move(x, y);
                 }
-                if(y > 0){
+                if (y > 0) {
                     score++;
                 }
                 this.x = this.x + x;
@@ -128,7 +155,7 @@ window.onload = function() {
                         grid.unshift([0, 0, 0, 0, 0, 0, 0, 0, 0, 0]);
                     }
                 })
-                score += [0,40,100,300,1200][ln];
+                score += [0, 40, 100, 300, 1200][ln];
                 lines += ln;
 
                 for (let i = 0; i < 24; i++) {
@@ -136,11 +163,11 @@ window.onload = function() {
                         //draw img at
                         //ctx.fillStyle = colors[grid[i][j]];
                         //ctx.fillRect(j * 26 + 2, i * 26 + 2, 24, 24);
-                        if(grid[i][j]){
+                        if (grid[i][j]) {
                             grid[i][j].x = j;
                             grid[i][j].y = i;
                             drawImgAt(grid[i][j]);
-                        } else{
+                        } else {
                             ctx.fillStyle = colors[0];
                             ctx.fillRect(j * 26 + 2, i * 26 + 2, 24, 24);
                         }
@@ -154,11 +181,11 @@ window.onload = function() {
 
             }
         }
-        showFuture(){
+        showFuture() {
             let counter = 0;
-            while(this.parts.every(function(val) {
-                return val.future(0, counter);
-            })){
+            while (this.parts.every(function(val) {
+                    return val.future(0, counter);
+                })) {
                 counter++;
             }
             clearParts(this.futureParts);
@@ -170,10 +197,10 @@ window.onload = function() {
                 this.futureParts[i].img = this.parts[i].img;
             }
         }
-        drop(){
+        drop() {
             let ascore = score;
-            while(this.move(0,1)){
-                
+            while (this.move(0, 1)) {
+
             }
             score += (score - ascore);
         }
@@ -203,11 +230,11 @@ window.onload = function() {
                 a.cx += .5;
                 a.cy += .5;
             }
-            if(a.c === 4){
+            if (a.c === 4) {
                 a.cx -= .5;
                 a.cy -= .5;
             }
-            if(a.c === 7){
+            if (a.c === 7) {
                 //a.cx -= .5;
                 a.cy -= 1;
             }
@@ -231,7 +258,7 @@ window.onload = function() {
     }
 
     class tetrim {
-        constructor(x, y, c,img) {
+        constructor(x, y, c, img) {
             this.x = x;
             this.y = y;
             this.c = c;
@@ -256,7 +283,8 @@ window.onload = function() {
     var ctx = c.getContext("2d");
     //Generate grid
     let grid, score, lines, active, cd, rotate, hardDrop, kcd, key, game, nextPc, pause, allowPause, heldPiece, allowHold;
-    function drawGrid(){
+
+    function drawGrid() {
         for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
                 ctx.rect(j * 26 + 1, i * 26 + 1, 26, 26);
@@ -268,7 +296,8 @@ window.onload = function() {
         ctx.fillText("Held:", 10 * 26 + 30, 10 * 52);
 
     }
-    function reset(){
+
+    function reset() {
         ctx.clearRect(0, 0, c.width, c.height);
 
         grid = [];
@@ -279,27 +308,28 @@ window.onload = function() {
             }
         }
         drawGrid();
-    score = 0;
-    lines = 0;
-    active = new tetrimino(3, 0, Math.floor(Math.random() * 7) + 1);
-    cd = 30*17;
-    rotate = true;
-    hardDrop = true;
-    kcd = 0;
-    key = [];
-    game = true;
-    nextPc = [];
+        score = 0;
+        lines = 0;
+        active = new tetrimino(3, 0, Math.floor(Math.random() * 7) + 1);
+        cd = 30 * 17;
+        rotate = true;
+        hardDrop = true;
+        kcd = 0;
+        key = [];
+        game = true;
+        nextPc = [];
 
-    pause = false;
-    allowPause = true;
+        pause = false;
+        allowPause = true;
 
-    heldPiece = null; //no piece is being held
-    allowHold = true; //able after a new piece is dropped
-    for(i = 0; i < 3;i++){
-        nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 7) + 1));
+        heldPiece = null; //no piece is being held
+        allowHold = true; //able after a new piece is dropped
+        for (i = 0; i < 3; i++) {
+            nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 7) + 1));
+        }
     }
-    }
-    function drawImgAt(piece){
+
+    function drawImgAt(piece) {
         /*ctx.save();
         ctx.translate(c.width/2,c.height/2);
 
@@ -311,26 +341,27 @@ window.onload = function() {
         //ctx.fillRect(piece.x * 26 + 2, piece.y * 26 + 2, 24, 24);
         ctx.restore();*/
         let image = piece.img ? preload[piece.img] : preload["lukes/sq-tr.png"];
-        let rad = piece.rot * 1/2 * Math.PI;
+        let rad = piece.rot * 1 / 2 * Math.PI;
 
         let x = piece.x * 26 + 14;
         let y = piece.y * 26 + 14;
         let width = image.width;
         let height = image.height;
-        
+
         ctx.translate(x, y);
         ctx.rotate(rad);
-        ctx.drawImage(image, -width/2, -height/2, width, height);
+        ctx.drawImage(image, -width / 2, -height / 2, width, height);
         ctx.fillStyle = colors[piece.c];
         ctx.globalAlpha /= 5;
-        ctx.fillRect(-width/2,-height/2,width,height);
+        ctx.fillRect(-width / 2, -height / 2, width, height);
         ctx.globalAlpha *= 5;
         ctx.rotate(-rad);
         ctx.translate(-x, -y);
     }
+
     function draw() {
         active.showFuture();
-        active.futureParts.forEach(function(val){
+        active.futureParts.forEach(function(val) {
             /*ctx.fillStyle = previewColors[val.c];
             //draw img at
             ctx.fillRect(val.x * 26 + 2, val.y * 26 + 2, 24, 24);*/
@@ -344,54 +375,58 @@ window.onload = function() {
             //draw img at
             drawImgAt(val);
         })
-        for(let i = 0; i < 3;i++){
+        for (let i = 0; i < 3; i++) {
             ctx.fillStyle = colors[nextPc[i].c];
-            nextPc[i].parts.forEach(function(part){
-                ctx.fillRect((part.x-3) * 10 + 10 * 26 + 26, part.y * 10 + i * 52, 10, 10);
+            nextPc[i].parts.forEach(function(part) {
+                ctx.fillRect((part.x - 3) * 10 + 10 * 26 + 26, part.y * 10 + i * 52, 10, 10);
             })
         }
     }
 
-    function next(){
-        for(i = 0; i < 3;i++){
+    function next() {
+        for (i = 0; i < 3; i++) {
             ctx.fillStyle = colors[0];
-            nextPc[i].parts.forEach(function(part){
-                ctx.fillRect((part.x-3) * 10 + 10 * 26 + 26, part.y * 10 + i * 52, 10, 10);
+            nextPc[i].parts.forEach(function(part) {
+                ctx.fillRect((part.x - 3) * 10 + 10 * 26 + 26, part.y * 10 + i * 52, 10, 10);
             })
         }
         nextPc.shift();
         nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 7) + 1));
     }
-    function clearParts(parts){
-        parts.forEach(function(val){
+
+    function clearParts(parts) {
+        parts.forEach(function(val) {
             ctx.fillStyle = colors[0];
             ctx.fillRect(val.x * 26 + 2, val.y * 26 + 2, 24, 24);
         })
     }
-    function togglePause(){
+
+    function togglePause() {
         pause = !pause;
-        if(pause){
+        if (pause) {
             document.getElementById("cynthiaisdum").style = "filter:blur(4px)";
             document.getElementById("pause").textContent = "Unpause";
         }
-        if(!pause){
+        if (!pause) {
             document.getElementById("cynthiaisdum").style = "filter:blur(0px)";
             document.getElementById("pause").textContent = "Pause";
             requestAnimationFrame(loop);
         }
     }
     drawGrid();
-    document.body.onkeydown = function(e) {
-        if(e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32)
-        e.preventDefault(); //prevent scrolling
+    drawGrid();
+    document.addEventListener("keydown", function(e) {
+        console.log(e.keyCode);
+        if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32)
+            e.preventDefault(); //prevent scrolling
 
-        if(!game){
+        if (!game) {
             return;
         }
-        if(e.keyCode === 80 && allowPause){
+        if (e.keyCode === 80 && allowPause) {
             togglePause(); //if pressing key to pause, and pausing is allowed, inverse pause condition
         }
-        if(pause){
+        if (pause) {
             return;
         }
 
@@ -401,29 +436,29 @@ window.onload = function() {
             draw();
             kcd = 4;
         }
-        if(hardDrop && e.keyCode === 32){ //Hard drop using space
+        if (hardDrop && e.keyCode === 32) { //Hard drop using space
             hardDrop = false;
             active.drop();
             draw();
 
         }
-        if(allowHold && e.keyCode === 67){
+        if (allowHold && e.keyCode === 67) {
             clearParts(active.parts);
             clearParts(active.futureParts);
             let type = active.c;
-            if(heldPiece){
+            if (heldPiece) {
                 ctx.fillStyle = colors[0];
-                heldPiece.parts.forEach(function(part){
-                    ctx.fillRect((part.x-3) * 10 + 10 * 26 + 26, part.y * 10 + 11 * 40, 10, 10);
+                heldPiece.parts.forEach(function(part) {
+                    ctx.fillRect((part.x - 3) * 10 + 10 * 26 + 26, part.y * 10 + 11 * 40, 10, 10);
                 })
                 active = heldPiece;
-            } else{
+            } else {
                 active = nextPc[0];
             }
-            heldPiece = new tetrimino(3,0,type);
+            heldPiece = new tetrimino(3, 0, type);
             ctx.fillStyle = colors[type];
-            heldPiece.parts.forEach(function(part){
-                ctx.fillRect((part.x-3) * 10 + 10 * 26 + 26, part.y * 10 + 11 * 40, 10, 10);
+            heldPiece.parts.forEach(function(part) {
+                ctx.fillRect((part.x - 3) * 10 + 10 * 26 + 26, part.y * 10 + 11 * 40, 10, 10);
             });
             next();
             allowHold = false;
@@ -435,12 +470,13 @@ window.onload = function() {
             kcd = 0;
         }
 
-    };
-    document.body.onkeyup = function(e) {
-        if(!game || pause){
+    });
+    document.addEventListener("keyup", function(e) {
+        console.log(e.keyCode);
+        if (!game || pause) {
             return;
         }
-        if(e.keyCode === 80){
+        if (e.keyCode === 80) {
             allowPause = true;
         }
         if (e.keyCode === 38 || e.keyCode === 87) {
@@ -451,7 +487,7 @@ window.onload = function() {
         }
         key.splice(key.indexOf(e.keyCode), 1);
         kcd = 0;
-    }
+    })
 
     function gameOver() {
         /*for (let i = 0; i < 24; i++) {
@@ -461,13 +497,14 @@ window.onload = function() {
             }
 
         }
-        */  
+        */
     }
     let then = Date.now();
     let now = Date.now();
+
     function loop() {
         now = Date.now();
-        let delta = now-then;
+        let delta = now - then;
         cd -= delta;
         kcd -= delta;
         then = Date.now();
@@ -475,42 +512,42 @@ window.onload = function() {
             if (key.indexOf(37) != -1 || key.indexOf(65) != -1) {
                 active.move(-1, 0);
                 draw();
-                kcd = 10*17;
+                kcd = 10 * 17;
             }
             if (key.indexOf(39) != -1 || key.indexOf(68) != -1) {
                 active.move(1, 0);
                 draw();
-                kcd = 10*17;
+                kcd = 10 * 17;
             }
             if (key.indexOf(40) != -1 || key.indexOf(83) != -1) {
                 active.move(0, 1);
                 draw();
-                cd = 20*17;
-                kcd = 7*17;
+                cd = 20 * 17;
+                kcd = 7 * 17;
             }
 
         }
         if (cd <= 0) {
             active.move(0, 1);
             draw();
-            cd = 20*17;
+            cd = 20 * 17;
         }
         document.getElementById("score").textContent = score;
         document.getElementById("lines").textContent = lines;
         if (game) {
-            if(!pause){
+            if (!pause) {
                 requestAnimationFrame(loop);
             }
         } else {
             requestAnimationFrame(gameOver);
         }
     }
-    document.getElementById("start").onclick = function(){
+    document.getElementById("start").onclick = function() {
         document.getElementById("start").textContent = "Restart";
-            document.getElementById("cynthiaisdum").style = "filter:blur(0px)";
-            reset();
-            requestAnimationFrame(loop);
-            draw();
+        document.getElementById("cynthiaisdum").style = "filter:blur(0px)";
+        reset();
+        requestAnimationFrame(loop);
+        draw();
     }
     document.getElementById("pause").onclick = togglePause;
 }
