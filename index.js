@@ -1,6 +1,40 @@
 window.onload = function() {
     let colors = ["#ffffff", "#42ebf4", "#415ff4", "#f7c922", "#f7f321", "#48f721", "#aa1efc", "#fc1e1e"];
     let previewColors = ["#ffffff", "#b2f7fb", "#b1befb", "#fbe595", "#fbf994", "#a7fb94", "#d693fe", "#fe9393"];
+    let preload = {};
+    function add(src){
+        let image = new Image();
+        image.src = src;
+        preload[src] = image;
+    }
+    add("lukes/sq-bl.png");
+    add("lukes/sq-br.png");
+    add("lukes/sq-tl.png");
+    add("lukes/sq-tr.png");
+    add("lukes/l1-1.png");
+    add("lukes/l1-2.png");
+    add("lukes/l1-3.png");
+    add("lukes/l1-4.png");
+    add("lukes/l2-1.png");
+    add("lukes/l2-2.png");
+    add("lukes/l2-3.png");
+    add("lukes/l2-4.png");
+    add("lukes/t-1.png");
+    add("lukes/t-2.png");
+    add("lukes/t-3.png");
+    add("lukes/t-4.png");
+    add("lukes/w-1.png");
+    add("lukes/w-2.png");
+    add("lukes/w-3.png");
+    add("lukes/w-4.png");
+    add("lukes/z1-1.png");
+    add("lukes/z1-2.png");
+    add("lukes/z1-3.png");
+    add("lukes/z1-4.png");
+    add("lukes/z2-1.png");
+    add("lukes/z2-2.png");
+    add("lukes/z2-3.png");
+    add("lukes/z2-4.png");
     class tetrimino {
         constructor(x, y, c) {
             this.c = c;
@@ -16,48 +50,48 @@ window.onload = function() {
             switch (c) {
 
                 case 1:
-                    this.parts.push(new tetrim(x, y, c));
-                    this.parts.push(new tetrim(x + 1, y, c));
-                    this.parts.push(new tetrim(x + 2, y, c));
-                    this.parts.push(new tetrim(x + 3, y, c));
+                    this.parts.push(new tetrim(x, y, c,"lukes/w-1.png"));
+                    this.parts.push(new tetrim(x, y + 1, c,"lukes/w-2.png"));
+                    this.parts.push(new tetrim(x, y + 2, c,"lukes/w-3.png"));
+                    this.parts.push(new tetrim(x, y + 3, c,"lukes/w-4.png"));
                     break;
                 case 2:
-                    this.parts.push(new tetrim(x, y, c));
-                    this.parts.push(new tetrim(x, y + 1, c));
-                    this.parts.push(new tetrim(x + 1, y + 1, c));
-                    this.parts.push(new tetrim(x + 2, y + 1, c));
+                    this.parts.push(new tetrim(x, y, c,"lukes/l2-1.png"));
+                    this.parts.push(new tetrim(x + 1, y , c,"lukes/l2-2.png"));
+                    this.parts.push(new tetrim(x, y + 1, c,"lukes/l2-3.png"));
+                    this.parts.push(new tetrim(x, y + 2, c,"lukes/l2-4.png"));
                     break;
                 case 3:
-                    this.parts.push(new tetrim(x + 2, y, c));
-                    this.parts.push(new tetrim(x, y + 1, c));
-                    this.parts.push(new tetrim(x + 1, y + 1, c));
-                    this.parts.push(new tetrim(x + 2, y + 1, c));
+                    this.parts.push(new tetrim(x, y, c,"lukes/l1-1.png"));
+                    this.parts.push(new tetrim(x + 1, y, c,"lukes/l1-2.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/l1-3.png"));
+                    this.parts.push(new tetrim(x + 1, y + 2, c,"lukes/l1-4.png"));
                     break;
                 case 4:
-                    this.parts.push(new tetrim(x, y, c));
-                    this.parts.push(new tetrim(x + 1, y, c));
-                    this.parts.push(new tetrim(x, y + 1, c));
-                    this.parts.push(new tetrim(x + 1, y + 1, c));
+                    this.parts.push(new tetrim(x, y, c,"lukes/sq-tl.png"));
+                    this.parts.push(new tetrim(x + 1, y, c,"lukes/sq-tr.png"));
+                    this.parts.push(new tetrim(x, y + 1, c,"lukes/sq-bl.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/sq-br.png"));
                     break;
                 case 5:
-                    this.parts.push(new tetrim(x + 1, y, c));
-                    this.parts.push(new tetrim(x + 2, y, c));
-                    this.parts.push(new tetrim(x, y + 1, c));
-                    this.parts.push(new tetrim(x + 1, y + 1, c));
+                    this.parts.push(new tetrim(x, y, c,"lukes/z1-1.png"));
+                    this.parts.push(new tetrim(x, y + 1, c,"lukes/z1-2.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/z1-3.png"));
+                    this.parts.push(new tetrim(x + 1, y + 2, c,"lukes/z1-4.png"));
                     break;
                 case 6:
-                    this.parts.push(new tetrim(x + 1, y + 1, c));
-                    this.parts.push(new tetrim(x + 2, y + 1, c));
-                    this.parts.push(new tetrim(x, y, c));
-                    this.parts.push(new tetrim(x + 1, y, c));
+                    this.parts.push(new tetrim(x + 1, y, c,"lukes/z2-1.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/z2-2.png"));
+                    this.parts.push(new tetrim(x, y + 1, c,"lukes/z2-3.png"));
+                    this.parts.push(new tetrim(x, y + 2, c,"lukes/z2-4.png"));
                     break;
 
                 case 7:
 
-                    this.parts.push(new tetrim(x + 1, y, c));
-                    this.parts.push(new tetrim(x, y + 1, c));
-                    this.parts.push(new tetrim(x + 1, y + 1, c));
-                    this.parts.push(new tetrim(x + 2, y + 1, c));
+                    this.parts.push(new tetrim(x, y, c,"lukes/t-1.png"));
+                    this.parts.push(new tetrim(x + 1, y, c,"lukes/t-2.png"));
+                    this.parts.push(new tetrim(x + 2, y, c,"lukes/t-3.png"));
+                    this.parts.push(new tetrim(x + 1, y + 1, c,"lukes/t-4.png"));
                     break;
             }
             if (!this.parts.every(function(val) {
@@ -82,7 +116,7 @@ window.onload = function() {
                 return true;
             } else if (y != 0) {
                 active.parts.forEach(function(val) {
-                    grid[val.y][val.x] = val.c;
+                    grid[val.y][val.x] = val;
                 })
                 let ln = 0;
                 grid.forEach(function(val, index) {
@@ -99,8 +133,17 @@ window.onload = function() {
 
                 for (let i = 0; i < 24; i++) {
                     for (let j = 0; j < 10; j++) {
-                        ctx.fillStyle = colors[grid[i][j]];
-                        ctx.fillRect(j * 20 + 2, i * 20 + 2, 18, 18);
+                        //draw img at
+                        //ctx.fillStyle = colors[grid[i][j]];
+                        //ctx.fillRect(j * 26 + 2, i * 26 + 2, 24, 24);
+                        if(grid[i][j]){
+                            grid[i][j].x = j;
+                            grid[i][j].y = i;
+                            drawImgAt(grid[i][j]);
+                        } else{
+                            ctx.fillStyle = colors[0];
+                            ctx.fillRect(j * 26 + 2, i * 26 + 2, 24, 24);
+                        }
                     }
                     //active = new tetrimino(0, 0, 1)
                 }
@@ -123,6 +166,8 @@ window.onload = function() {
                 this.futureParts[i].x = this.parts[i].x;
                 this.futureParts[i].c = this.parts[i].c;
                 this.futureParts[i].y = this.parts[i].y + counter - 1;
+                this.futureParts[i].rot = this.parts[i].rot;
+                this.futureParts[i].img = this.parts[i].img;
             }
         }
         drop(){
@@ -142,6 +187,8 @@ window.onload = function() {
                 this.parts.forEach(function(val) {
                     val.x = val.nx + n;
                     val.y = val.ny;
+                    val.rot += 1;
+                    val.rot %= 4;
                 })
                 a.x += n;
                 return true;
@@ -156,8 +203,13 @@ window.onload = function() {
                 a.cx += .5;
                 a.cy += .5;
             }
-            if (a.c === 4) {
-                return true;
+            if(a.c === 4){
+                a.cx -= .5;
+                a.cy -= .5;
+            }
+            if(a.c === 7){
+                //a.cx -= .5;
+                a.cy -= 1;
             }
             //rotating right
             if (d === 1) {
@@ -179,14 +231,16 @@ window.onload = function() {
     }
 
     class tetrim {
-        constructor(x, y, c) {
+        constructor(x, y, c,img) {
             this.x = x;
             this.y = y;
             this.c = c;
+            this.img = img;
+            this.rot = 0;
         }
         move(x, y) {
             ctx.fillStyle = colors[0]
-            ctx.fillRect(this.x * 20 + 2, this.y * 20 + 2, 18, 18);
+            ctx.fillRect(this.x * 26 + 2, this.y * 26 + 2, 24, 24);
             grid[this.y][this.x] = 0;
             this.x = this.x + x;
             this.y = this.y + y;
@@ -205,13 +259,13 @@ window.onload = function() {
     function drawGrid(){
         for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
-                ctx.rect(j * 20 + 1, i * 20 + 1, 20, 20);
+                ctx.rect(j * 26 + 1, i * 26 + 1, 26, 26);
                 ctx.stroke();
             }
         }
         ctx.fillStyle = "#000000";
         ctx.font = "16px sans-serif";
-        ctx.fillText("Held:", 10 * 20 + 30, 10 * 40);
+        ctx.fillText("Held:", 10 * 26 + 30, 10 * 52);
 
     }
     function reset(){
@@ -227,7 +281,7 @@ window.onload = function() {
         drawGrid();
     score = 0;
     lines = 0;
-    active = new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1);
+    active = new tetrimino(3, 0, Math.floor(Math.random() * 7) + 1);
     cd = 30*17;
     rotate = true;
     hardDrop = true;
@@ -242,23 +296,58 @@ window.onload = function() {
     heldPiece = null; //no piece is being held
     allowHold = true; //able after a new piece is dropped
     for(i = 0; i < 3;i++){
-        nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1));
+        nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 7) + 1));
     }
+    }
+    function drawImgAt(piece){
+        /*ctx.save();
+        ctx.translate(c.width/2,c.height/2);
+
+        let rad = piece.rot * 1/2 * Math.PI;
+        ctx.rotate(rad);
+        ctx.drawImage(piece.img ? preload[piece.img] : preload["lukes/sq-tr.png"],
+        -c.width/2 + (piece.x * 26 + 2)*Math.cos(rad)-(piece.y * 26 + 2)*Math.sin(rad),
+        -c.height/2 + (piece.x * 26 + 2)*Math.sin(rad)+(piece.y * 26 + 2)*Math.cos(rad));
+        //ctx.fillRect(piece.x * 26 + 2, piece.y * 26 + 2, 24, 24);
+        ctx.restore();*/
+        let image = piece.img ? preload[piece.img] : preload["lukes/sq-tr.png"];
+        let rad = piece.rot * 1/2 * Math.PI;
+
+        let x = piece.x * 26 + 14;
+        let y = piece.y * 26 + 14;
+        let width = image.width;
+        let height = image.height;
+        
+        ctx.translate(x, y);
+        ctx.rotate(rad);
+        ctx.drawImage(image, -width/2, -height/2, width, height);
+        ctx.fillStyle = colors[piece.c];
+        ctx.globalAlpha /= 5;
+        ctx.fillRect(-width/2,-height/2,width,height);
+        ctx.globalAlpha *= 5;
+        ctx.rotate(-rad);
+        ctx.translate(-x, -y);
     }
     function draw() {
         active.showFuture();
         active.futureParts.forEach(function(val){
-            ctx.fillStyle = previewColors[val.c];
-            ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
+            /*ctx.fillStyle = previewColors[val.c];
+            //draw img at
+            ctx.fillRect(val.x * 26 + 2, val.y * 26 + 2, 24, 24);*/
+            ctx.globalAlpha = 0.6;
+            drawImgAt(val);
+            ctx.globalAlpha = 1;
+
         })
         active.parts.forEach(function(val) {
-            ctx.fillStyle = colors[val.c];
-            ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
+            //ctx.fillStyle = colors[val.c];
+            //draw img at
+            drawImgAt(val);
         })
         for(let i = 0; i < 3;i++){
             ctx.fillStyle = colors[nextPc[i].c];
             nextPc[i].parts.forEach(function(part){
-                ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + i * 40, 10, 10);
+                ctx.fillRect((part.x-3) * 10 + 10 * 26 + 26, part.y * 10 + i * 52, 10, 10);
             })
         }
     }
@@ -267,16 +356,16 @@ window.onload = function() {
         for(i = 0; i < 3;i++){
             ctx.fillStyle = colors[0];
             nextPc[i].parts.forEach(function(part){
-                ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + i * 40, 10, 10);
+                ctx.fillRect((part.x-3) * 10 + 10 * 26 + 26, part.y * 10 + i * 52, 10, 10);
             })
         }
         nextPc.shift();
-        nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 6) + 1));
+        nextPc.push(new tetrimino(3, 0, Math.floor(Math.random() * 7) + 1));
     }
     function clearParts(parts){
         parts.forEach(function(val){
             ctx.fillStyle = colors[0];
-            ctx.fillRect(val.x * 20 + 2, val.y * 20 + 2, 18, 18);
+            ctx.fillRect(val.x * 26 + 2, val.y * 26 + 2, 24, 24);
         })
     }
     function togglePause(){
@@ -325,7 +414,7 @@ window.onload = function() {
             if(heldPiece){
                 ctx.fillStyle = colors[0];
                 heldPiece.parts.forEach(function(part){
-                    ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + 11 * 40, 10, 10);
+                    ctx.fillRect((part.x-3) * 10 + 10 * 26 + 26, part.y * 10 + 11 * 40, 10, 10);
                 })
                 active = heldPiece;
             } else{
@@ -334,7 +423,7 @@ window.onload = function() {
             heldPiece = new tetrimino(3,0,type);
             ctx.fillStyle = colors[type];
             heldPiece.parts.forEach(function(part){
-                ctx.fillRect((part.x-3) * 10 + 10 * 20 + 20, part.y * 10 + 11 * 40, 10, 10);
+                ctx.fillRect((part.x-3) * 10 + 10 * 26 + 26, part.y * 10 + 11 * 40, 10, 10);
             });
             next();
             allowHold = false;
@@ -368,7 +457,7 @@ window.onload = function() {
         /*for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
                 ctx.fillStyle = "rgb(" + 180 + "," + 180 + "," + 244 + ")";
-                ctx.fillRect(j * 20, i * 20, 20, 20);
+                ctx.fillRect(j * 26, i * 26, 26, 26);
             }
 
         }
