@@ -407,18 +407,21 @@ window.onload = function() {
             document.getElementById("game").style = "filter:blur(4px)";
             document.getElementById("pause").textContent = "Unpause";
             document.body.className = "";
+            aud.pause();
+            audio = false;
         }
         if (!pause) {
             document.getElementById("game").style = "filter:blur(0px)";
             document.getElementById("pause").textContent = "Pause";
             document.body.className = "noscroll";
             requestAnimationFrame(loop);
+            aud.play();
+            audio = true;
         }
     }
     drawGrid();
     drawGrid();
     document.addEventListener("keydown", function(e) {
-        console.log(e.keyCode);
         if (e.keyCode === 40 || e.keyCode === 38 || e.keyCode === 32)
             e.preventDefault(); //prevent scrolling
 
@@ -474,7 +477,6 @@ window.onload = function() {
 
     });
     document.addEventListener("keyup", function(e) {
-        console.log(e.keyCode);
         if (!game || pause) {
             return;
         }
@@ -493,6 +495,8 @@ window.onload = function() {
 
     function gameOver() {
         document.body.className = "";
+        aud.pause();
+        aud = false;
         /*for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
                 ctx.fillStyle = "rgb(" + 180 + "," + 180 + "," + 244 + ")";
@@ -545,7 +549,13 @@ window.onload = function() {
             requestAnimationFrame(gameOver);
         }
     }
+    let audio = false;
+    var aud = document.getElementById("audio");
     document.getElementById("start").onclick = function() {
+        if(!audio){
+            audio = true;
+            aud.play();
+        }
         document.body.className = "noscroll";
         document.getElementById("start").textContent = "Restart";
         document.getElementById("game").style = "filter:blur(0px)";
