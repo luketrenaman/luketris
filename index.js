@@ -406,14 +406,12 @@ window.onload = function() {
         if (pause) {
             document.getElementById("game").style = "filter:blur(4px)";
             document.getElementById("pause").textContent = "Unpause";
-            document.body.className = "";
             aud.pause();
             audio = false;
         }
         if (!pause) {
             document.getElementById("game").style = "filter:blur(0px)";
             document.getElementById("pause").textContent = "Pause";
-            document.body.className = "noscroll";
             requestAnimationFrame(loop);
             aud.play();
             audio = true;
@@ -494,7 +492,6 @@ window.onload = function() {
     })
 
     function gameOver() {
-        document.body.className = "";
         aud.pause();
         aud = false;
         /*for (let i = 0; i < 24; i++) {
@@ -556,7 +553,6 @@ window.onload = function() {
             audio = true;
             aud.play();
         }
-        document.body.className = "noscroll";
         document.getElementById("start").textContent = "Restart";
         document.getElementById("game").style = "filter:blur(0px)";
         reset();
