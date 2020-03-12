@@ -352,9 +352,9 @@ window.onload = function() {
         ctx.rotate(rad);
         ctx.drawImage(image, -width / 2, -height / 2, width, height);
         ctx.fillStyle = colors[piece.c];
-        ctx.globalAlpha /= 5;
+        ctx.globalAlpha = 0.2;
         ctx.fillRect(-width / 2, -height / 2, width, height);
-        ctx.globalAlpha *= 5;
+        ctx.globalAlpha = 1;
         ctx.rotate(-rad);
         ctx.translate(-x, -y);
     }
