@@ -406,10 +406,12 @@ window.onload = function() {
         if (pause) {
             document.getElementById("game").style = "filter:blur(4px)";
             document.getElementById("pause").textContent = "Unpause";
+            document.body.className = "";
         }
         if (!pause) {
             document.getElementById("game").style = "filter:blur(0px)";
             document.getElementById("pause").textContent = "Pause";
+            document.body.className = "noscroll";
             requestAnimationFrame(loop);
         }
     }
@@ -490,6 +492,7 @@ window.onload = function() {
     })
 
     function gameOver() {
+        document.body.className = "";
         /*for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
                 ctx.fillStyle = "rgb(" + 180 + "," + 180 + "," + 244 + ")";
@@ -543,6 +546,7 @@ window.onload = function() {
         }
     }
     document.getElementById("start").onclick = function() {
+        document.body.className = "noscroll";
         document.getElementById("start").textContent = "Restart";
         document.getElementById("game").style = "filter:blur(0px)";
         reset();
