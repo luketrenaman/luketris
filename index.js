@@ -279,7 +279,7 @@ window.onload = function() {
         }
     }
     //10x24
-    var c = document.getElementById("cynthiaisdum");
+    var c = document.getElementById("game");
     var ctx = c.getContext("2d");
     //Generate grid
     let grid, score, lines, active, cd, rotate, hardDrop, kcd, key, game, nextPc, pause, allowPause, heldPiece, allowHold;
@@ -404,11 +404,11 @@ window.onload = function() {
     function togglePause() {
         pause = !pause;
         if (pause) {
-            document.getElementById("cynthiaisdum").style = "filter:blur(4px)";
+            document.getElementById("game").style = "filter:blur(4px)";
             document.getElementById("pause").textContent = "Unpause";
         }
         if (!pause) {
-            document.getElementById("cynthiaisdum").style = "filter:blur(0px)";
+            document.getElementById("game").style = "filter:blur(0px)";
             document.getElementById("pause").textContent = "Pause";
             requestAnimationFrame(loop);
         }
@@ -449,7 +449,7 @@ window.onload = function() {
             if (heldPiece) {
                 ctx.fillStyle = colors[0];
                 heldPiece.parts.forEach(function(part) {
-                    ctx.fillRect((part.x - 3) * 10 + 10 * 26 + 26, part.y * 10 + 11 * 40, 10, 10);
+                    ctx.fillRect((part.x - 3) * 10 + 10 * 26 + 26, part.y * 10 + 14 * 40, 10, 10);
                 })
                 active = heldPiece;
             } else {
@@ -458,7 +458,7 @@ window.onload = function() {
             heldPiece = new tetrimino(3, 0, type);
             ctx.fillStyle = colors[type];
             heldPiece.parts.forEach(function(part) {
-                ctx.fillRect((part.x - 3) * 10 + 10 * 26 + 26, part.y * 10 + 11 * 40, 10, 10);
+                ctx.fillRect((part.x - 3) * 10 + 10 * 26 + 26, part.y * 10 + 14 * 40, 10, 10);
             });
             next();
             allowHold = false;
@@ -544,10 +544,12 @@ window.onload = function() {
     }
     document.getElementById("start").onclick = function() {
         document.getElementById("start").textContent = "Restart";
-        document.getElementById("cynthiaisdum").style = "filter:blur(0px)";
+        document.getElementById("game").style = "filter:blur(0px)";
         reset();
         requestAnimationFrame(loop);
         draw();
     }
+    document.getElementById("start2").onclick = document.getElementById("start").onclick
     document.getElementById("pause").onclick = togglePause;
+    document.getElementById("pause2").onclick = togglePause;
 }

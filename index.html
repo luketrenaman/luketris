@@ -32,6 +32,7 @@
         }
         .side-panel{
             display:inline-block;
+            max-width:400px;
         }
         button{
             padding:1rem;
@@ -54,18 +55,23 @@
             outline:0;
         }
 
-        .game{
-            margin:4rem 0;
+        .game-container{
+            margin:0 0;
             display: flex;
             align-items: center;
             justify-content: center;
             width:100%;
         }
+        #game{
+            max-height:630px;
+            max-width:360px;
+            height:100vh;
+        }
         .title{
             text-align:center;
         }
-        .margin{
-            margin:1rem 5vw;
+        .center-text{
+            text-align:center;
         }
         #d-pad{
             visibility:hidden;
@@ -74,34 +80,52 @@
             bottom:0%;
             opacity:0.8;
         }
+        #d-pad{
+            text-align:center;
+        }
+        #d-pad button span{
+            margin:0 -14vw;
+            
+        }
         #d-pad button{
+            padding:8vh 8vw;
             margin:0px;
-            padding:6vh 6vw;
             background:white;
             border: 2px solid black;
             border-radius:8px;
             cursor:pointer;
-            font-size:3vw;
-            width:1vw;
-            height:1vh;
+            font-size:6vw;
+            width:8vw;
+            height:8vh;
+            max-height:30vw;
+            max-width:30vh;
             user-select:none;
+            box-sizing:border-box;
+            text-align:center;
+            line-height: 4vh;
         }
-        #d-pad #space{
-            padding:6vh 16vw;
-            width:100%;
+        #d-pad .wide{
+            padding:3vh 28vw;
+            width:16vw;
+            height:6vh;
+            max-height:30vw;
+            max-width:60vh;
+            line-height:2vh;
         }
         @media only screen and (max-width: 760px) {
             #d-pad { visibility:visible;}
-            .game{
+            .game-container{
                 margin:0px 0px;
+                align-items: left;
+                justify-content: left;
             }
-            #cynthiaisdum{
+            #game{
                 height:100vh;
                 width:100vw;
             }
             .side-panel{
-                width:300px;
-                position:absolute;
+                visibility:hidden;
+                display:none;
                 right:0%;
                 top:0%;
             }
@@ -121,14 +145,25 @@
 </head>
 <body>
     <h1 class = "title">Luketris</h1>
-        <div class = "game">
-            <canvas id="cynthiaisdum" width="360" height="630"></canvas><!-- width should technically be 260-->
+        <div class = "game-container">
+            <canvas id="game" width="360" height="630"></canvas><!-- width should technically be 260-->
             <div class="side-panel">
-                <a href = "#cynthiaisdum"><button id = "start">Start</button></a><button id = "pause">Pause</button>
                 <p>Score: <span id="score"></span></p>
                 <p>Lines: <span id="lines"></span></p>
+                <h3>Instructions:</h3>
+                <p>Move a piece using ASD or the left, right, and down arrow keys.</p>
+                <p>Rotate a piece by using the up arrow key.</p>
+                <p>Instantly drop a piece using space bar.</p>
+                <p>Hold a piece to use later by pressing C.</p>
+                <p>Pause the game by pressing the p key.</p>
+                <p>View source code or report a glitch <a href = "https://github.com/luketrenaman/luketris">here</a>.</p>
+                <a href = "#game"><button id = "start">Start</button></a><button id = "pause">Pause</button>
             </div>
             <div id = "d-pad">
+                <a href = "#game"><button id = "start2" class = "wide"><span>Start</span></button></a>
+                <br>
+                <button id = "pause2" class = "wide"><span>Pause</span></button>
+                <br>
                 <button id = "hold">h</button>
                 <button id = "rotate">^</button>
                 <button id = "pauseKey">p</button>
@@ -137,16 +172,8 @@
                 <button id = "down">v</button>
                 <button id = "right">&gt;</button>
                 <br>
-                <button id = "space">vvv</button>
+                <button id = "space" class = "wide"><span>vvv</span></button>
             </div>
-        </div>
-        <div class = "margin">
-            <h1>Instructions</h1>
-            <p>Move a piece using ASD or the left, right, and down arrow keys.</p>
-            <p>Rotate a piece by using the up arrow key.</p>
-            <p>Instantly drop a piece using space bar.</p>
-            <p>Hold a piece to use later by pressing C.</p>
-            <p>Pause the game by pressing the p key.</p>
         </div>
 </body>
 </html>
