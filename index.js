@@ -493,7 +493,7 @@ window.onload = function() {
 
     function gameOver() {
         aud.pause();
-        aud = false;
+        audio = false;
         /*for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
                 ctx.fillStyle = "rgb(" + 180 + "," + 180 + "," + 244 + ")";
