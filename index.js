@@ -494,6 +494,9 @@ window.onload = function() {
     function gameOver() {
         aud.pause();
         aud = false;
+        if(pause){
+            togglePause();
+        }
         /*for (let i = 0; i < 24; i++) {
             for (let j = 0; j < 10; j++) {
                 ctx.fillStyle = "rgb(" + 180 + "," + 180 + "," + 244 + ")";
@@ -549,10 +552,14 @@ window.onload = function() {
     let audio = false;
     var aud = document.getElementById("audio");
     document.getElementById("start").onclick = function() {
+        if(pause){
+            togglePause();
+        }
         if(!audio){
             audio = true;
             aud.play();
         }
+        
         document.getElementById("start").textContent = "Restart";
         document.getElementById("game").style = "filter:blur(0px)";
         reset();
