@@ -493,7 +493,7 @@ window.onload = function() {
 
     function gameOver() {
         aud.pause();
-        aud = false;
+        audio = false;
         if(pause){
             togglePause();
         }
