@@ -404,13 +404,13 @@ window.onload = function() {
     function togglePause() {
         pause = !pause;
         if (pause) {
-            document.getElementById("game").style = "filter:blur(4px)";
+            document.getElementById("game").style = "filter:grayscale(0.6)";
             document.getElementById("pause").textContent = "Unpause";
             aud.pause();
             audio = false;
         }
         if (!pause) {
-            document.getElementById("game").style = "filter:blur(0px)";
+            document.getElementById("game").style = "filter:grayscale(0)";
             document.getElementById("pause").textContent = "Pause";
             requestAnimationFrame(loop);
             aud.play();
